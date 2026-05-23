@@ -41,14 +41,19 @@ int main(){
     std::cout << "Data for the first image: " << pixels[0].size() << std::endl; //print data for the first image
     std::cout << "Answer for the first image: " << answers[0] << std::endl; //print answer for the first image
 
-    std::cout << "Training Logistic Regression model..." << std::endl; //show training start
+    std::cout << "Training Logistic Regression model..." << std::endl; //traning start
     sklearn_cpp::LogisticRegression model(0.01); //load .hpp
     model.fit(pixels, answers); //train the model with the loaded data
-    std::cout << "Model training completed." << std::endl; //show training completion
+    std::cout << "Model training completed." << std::endl; //training completed
 
+    load_read_mnist("Data/mnist_test.csv", pixels, answers); //load and read MNIST test dataset from csv file
     int guess = model.predict(pixels[0]); //predict the answer for the first image using the trained model
-    std::cout << "Predicted answer for the first image: " << guess << std::endl; //print the predicted answer for the first image
-    std::cout << "Actual answer for the first image: " << answers[0] << std::endl; //print the actual answer for the first image
+    std::cout << "Predicted answer for the first image: " << guess << std::endl;
+    std::cout << "Actual answer for the first image: " << answers[0] << std::endl;
 
     return 0;
 }
+/* uses Gemni and VS built in AI to help parts of the code
+for the dataset, due to the file size is too big, i deleted them for git, if download -> put into Data folder
+change file just edit line 37 (traning), 49 (actual predeict)
+*/
