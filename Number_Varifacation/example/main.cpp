@@ -3,6 +3,7 @@
 #include <string>
 #include <sstream>
 #include <vector>
+#include "math/multiclass_logistic_regression.hpp"
 
 void load_read_mnist(const std::string& filepath, std::vector<std::vector<double>>& pixels, std::vector<double>& answers){ //load MNIST from Data/mnist.csv
     std::ifstream file(filepath);
@@ -39,6 +40,15 @@ int main(){
     std::cout << "Number of labels: " << answers.size() << std::endl; //print number of labels
     std::cout << "Data for the first image: " << pixels[0].size() << std::endl; //print data for the first image
     std::cout << "Answer for the first image: " << answers[0] << std::endl; //print answer for the first image
+
+    std::cout << "Training Logistic Regression model..." << std::endl; //show training start
+    sklearn_cpp::LogisticRegression model(0.01); //load .hpp
+    model.fit(pixels, answers); //train the model with the loaded data
+    std::cout << "Model training completed." << std::endl; //show training completion
+
+    int guess = model.predict(pixels[0]); //predict the answer for the first image using the trained model
+    std::cout << "Predicted answer for the first image: " << guess << std::endl; //print the predicted answer for the first image
+    std::cout << "Actual answer for the first image: " << answers[0] << std::endl; //print the actual answer for the first image
 
     return 0;
 }
