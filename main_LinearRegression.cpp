@@ -1,3 +1,4 @@
+//To run the code use "g++ -Iinclude main_LinearRegression.cpp
 #include <iostream>
 #include <vector>
 // Add the header file for linear regression
