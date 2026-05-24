@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
 // Add the header file for linear regression
-#include "LinearRegression.hpp"
+#include "sklearn_cpp/linear_model/LinearRegression.hpp"
 
 // Hi Khiem, it is me Ammar! I made this with your favorite anime character in mind ;)
 int main (){
