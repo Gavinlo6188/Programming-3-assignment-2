@@ -62,7 +62,7 @@ int main() {
     }
     std::cout << "Successfully loaded " << X.size() << " samples." << std::endl;
 
-    // TRAIN MODEL
+    // Train Model
     // Hyperparameters: Learning Rate (0.01), Iterations (1000), Regularization (0.01)
     sklearn_cpp::linear_model::LogisticRegression model(0.01, 1000, 0.01);
     
