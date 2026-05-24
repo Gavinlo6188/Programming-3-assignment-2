@@ -206,6 +206,4 @@ public:
 } // namespace linear_model
 } // namespace sklearn_cpp
 
-/* use Gemini and VS built in AI to help parts of the code */
-} // namespace linear_model
-} // namespace sklearn_cpp
+
