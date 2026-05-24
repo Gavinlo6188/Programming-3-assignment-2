@@ -1,77 +1,45 @@
-#pragma once
+#include <iostream>
 #include <vector>
+// Add the header file for linear regression
+#include "sklearn_cpp/linear_model/LinearRegression.hpp"
 
-namespace sklearn_cpp {
-    namespace linear_model {
-
-        class LinearRegression{
-        private:
-        // Private member variables will be defined here
-        double bias;               // starting point 
-        double learning_rate;      // controls how big the steps are
-        int maximum_iterations;    // decides how long the training will run
-        std::vector<double> weights; // Vector to store weights for their respective features 
-
-        public: 
-        // Constructor to set learning rate and iteration number
-        LinearRegression(double lr = 0.02, int max_itr = 1000) : 
-        learning_rate{lr}, maximum_iterations{max_itr}, bias{0.0} {
-        // Initially, weightss are empty, until we fit the model into the data
-        }   
-                                
-        // Helper function to compute the dot product of the predicted weights and input features
-        double compute_dot_product(const std::vector<double> &feature) const {
-            double dot_product{0.0};
-            for (int i=0; i < weights.size(); i++){
-            dot_product += weights[i] * feature[i];
-            }
-            return dot_product;
-        }
-
-        double predict(const std::vector<double> &feature) const {
-            // Add the bias
-            double predicted_value{compute_dot_product(feature) + bias};
-            return predicted_value;
-        }
- 
-        // This function will take the responsibility of aplying th learning algorithm to the data 
-        void fit(const std::vector<std::vector<double>> &samples, const std::vector<double> &targets) {    // Update the weights and bias accordingly
-            // Compute predictions, x is the vector of vector features, & y is the vector of outputs
-            double feature_value{0.0};
-            size_t number_of_features{samples[0].size()}; // number of features in one sample = no. of weights
-            weights.resize(number_of_features, 0.0); // Set weight vector to no. of features & initialise them all to 0.0;
-            std::vector<double> gradient_weight(number_of_features, 0.0);
-            double gradient_bias{0.0};
-            //double gradient_weight_sum{0.0};
-            //double gradient_bias_sum{0.0};     
-            //double weight_old {0.0};
-            //double bias_old{0.0};
-     
-            for (int iterations=0; iterations < maximum_iterations; iterations++) {
-                for (int i=0; i < samples.size(); i++) {
-                    // Compute errors
-                    double error = predict(samples[i]) - targets[i]; 
-                    // Store the value of the j-th feature in the i-th sample (i.e. the value inside the row)
-                    for (int j = 0; j < number_of_features; j++){
-                        feature_value = samples[i][j];
-                        // Accumulate the gradients for weights and biasses 
-                        gradient_weight[j] += feature_value * error;
-                        gradient_bias += error; 
-                    }        
-                }
-                gradient_bias /= samples.size();
-                for (int j = 0; j < number_of_features; j++){
-                    // Update weights and bias using the calculated errors and also the learning rate
-                    gradient_weight[j] /= samples.size();
-                    weights[j] = weights[j] - learning_rate * (gradient_weight[j]);
-                }
-                bias = bias - learning_rate * (gradient_bias);  
-                
-                // Reset the sum for the next iteration
-                gradient_weight.assign(gradient_weight.size(), 0.0); 
-                gradient_bias=0.0; 
-            }
-        }
+// Hi Khiem, it is me Ammar! I made this with your favorite anime character in mind ;)
+int main (){
+    std::cout << std::endl << "ANIME POWER LEVELS LINEAR REGRESSION MODEL" << std::endl;
+    
+    // 1. ANIME TRAINING DATASET (POWER LEVELS)
+    std::vector<std::vector<double>> training_level = {
+        {1.0},             // Goku
+        {2.0},             // Vegeta
+        {3.0},             // Saitama (One Punch Man)
+        {4.0},             // Luffy
+        {5.0},             // Tatsumaki (One Punch Man)
+        {6.0},             // Naruto
         };
-    }
+
+    std::vector<double> anime_power_levels = {
+        1000.0,               // Goku
+        2000.0,             // Vegeta
+        3500.0,            // Saitama (One Punch Man)
+        4000.0,           // Luffy
+        4200.0,         // Tatsumaki (One Punch Man) // also 42 ur favourite number :D
+        6900.0,     // Naruto
+    };          
+      
+    // 2. MAKE LINEAR REGRESSION MODEL
+    sklearn_cpp::linear_model::LinearRegression model(0.001, 1042); // Best values for learning rate and iteration number that I found after testing
+    std::cout << std::endl << "Ninja Training the model on Anime Power Levels" << std::endl;
+
+    // 3. TRAIN THE ANIME MODEL
+    model.fit(training_level, anime_power_levels);
+    std::cout << std::endl << "MODEL TRAINING COMPLETE KHIEM!!!" << std::endl;
+
+    // 4. Choose Your Anime Character to Test (Tatsumaki ofcourse ;))
+    std::vector<double> SUPER_SAIYAN_TEST = {2.0};  // Khiem, please change this value to test other characters!
+    auto result = model.predict(SUPER_SAIYAN_TEST);
+
+    // 5. Print Congrats + Result
+    std::cout << std::endl << "Predicted Power Level:   " << result << std::endl;
+    std::cout << std::endl << "CONGRATS GENIUS KHIEM! YOU PREDICTED THEIR POWER LEVEL CORRECTLY!" << std::endl;
+    return 0;
 }
