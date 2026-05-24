@@ -1,6 +1,6 @@
+#pragma once
 #include <vector>
 #include <cmath> //Need to use to calcualte e^-z in the sigmoid function
-#include <iostream>
 
 namespace sklearn_cpp {
 namespace linear_model {
