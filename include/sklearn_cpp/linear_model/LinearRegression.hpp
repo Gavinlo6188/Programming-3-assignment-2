@@ -1,3 +1,4 @@
+#pragma once
 #include <vector>
 
 namespace sklearn_cpp {
@@ -46,10 +47,10 @@ namespace sklearn_cpp {
             //double weight_old {0.0};
             //double bias_old{0.0};
      
-            for (int iterations=0; iterations < 1000; iterations++) {
+            for (int iterations=0; iterations < maximum_iterations; iterations++) {
                 for (int i=0; i < samples.size(); i++) {
                     // Compute errors
-                    double error = predict_function(samples[i]) - targets[i]; 
+                    double error = predict(samples[i]) - targets[i]; 
                     // Store the value of the j-th feature in the i-th sample (i.e. the value inside the row)
                     for (int j = 0; j < number_of_features; j++){
                         feature_value = samples[i][j];
