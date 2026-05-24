@@ -3,7 +3,7 @@
 #include <string>
 #include <fstream>
 #include <sstream>
-#include "logistic_regression.hpp" 
+#include "Logistic_Regression.hpp" 
 
 /**
  * load_data: A helper function to read comma-separated values from a file.
