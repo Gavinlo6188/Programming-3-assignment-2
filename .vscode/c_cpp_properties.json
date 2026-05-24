@@ -4,7 +4,8 @@
             "name": "Win32",
             "includePath": [
                 "${workspaceFolder}/**",
-                "${workspaceFolder}/Number_Varifacation/include"
+                "${workspaceFolder}/Number_Varifacation/include",
+                "${workspaceFolder}/Number_Varifacation/include/math"
             ],
             "defines": [
                 "_DEBUG",
