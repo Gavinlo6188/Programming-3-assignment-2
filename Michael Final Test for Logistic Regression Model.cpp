@@ -87,7 +87,7 @@ int main() {
     }
 
     std::cout << "\nBatch accuracy for these 5 samples: " << (correct_guesses / 5.0) * 100 << "%" << std::endl;
-    std::cout << "-----------------------------------------------" << std::endl;
+    
 
     return 0; // Everything ran successfully
 }
