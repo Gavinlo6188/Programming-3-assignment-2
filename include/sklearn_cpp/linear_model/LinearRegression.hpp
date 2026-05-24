@@ -27,14 +27,14 @@ namespace sklearn_cpp {
             return dot_product;
         }
 
-        double predict_function(const std::vector<double> &feature) const {
+        double predict(const std::vector<double> &feature) const {
             // Add the bias
             double predicted_value{compute_dot_product(feature) + bias};
             return predicted_value;
         }
  
         // This function will take the responsibility of aplying th learning algorithm to the data 
-        void fit_function(const std::vector<std::vector<double>> &samples, const std::vector<double> &targets) {    // Update the weights and bias accordingly
+        void fit(const std::vector<std::vector<double>> &samples, const std::vector<double> &targets) {    // Update the weights and bias accordingly
             // Compute predictions, x is the vector of vector features, & y is the vector of outputs
             double feature_value{0.0};
             int number_of_features{samples[0].size()}; // number of features in one sample = no. of weights
