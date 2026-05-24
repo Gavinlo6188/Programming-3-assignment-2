@@ -1,3 +1,4 @@
+//To run the code use "g++ -Iinclude main_binary.cpp"
 #include <iostream>
 #include <vector>
 #include <string>
