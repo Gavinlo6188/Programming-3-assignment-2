@@ -25,7 +25,7 @@ bool load_csv_data(const std::string& filename, std::vector<std::vector<double>>
             continue; 
         }
 
-        //Set up a string stream to parse the current line
+        //Set up a string stream to break down the current line
         std::stringstream ss(line);
         std::string value_str;
         std::vector<double> row_features;
