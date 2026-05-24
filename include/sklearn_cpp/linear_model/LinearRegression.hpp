@@ -38,7 +38,7 @@ namespace sklearn_cpp {
         void fit(const std::vector<std::vector<double>> &samples, const std::vector<double> &targets) {    // Update the weights and bias accordingly
             // Compute predictions, x is the vector of vector features, & y is the vector of outputs
             double feature_value{0.0};
-            int number_of_features{samples[0].size()}; // number of features in one sample = no. of weights
+            size_t number_of_features{samples[0].size()}; // number of features in one sample = no. of weights
             weights.resize(number_of_features, 0.0); // Set weight vector to no. of features & initialise them all to 0.0;
             std::vector<double> gradient_weight(number_of_features, 0.0);
             double gradient_bias{0.0};

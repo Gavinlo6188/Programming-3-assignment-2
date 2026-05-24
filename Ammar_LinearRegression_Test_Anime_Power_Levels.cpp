@@ -39,7 +39,7 @@ int main (){
     auto result = model.predict(SUPER_SAIYAN_TEST);
 
     // 5. Print Congrats + Result
-    std::cout << std::endl << "Predicted Power Level:" << result[0] << std::endl;
+    std::cout << std::endl << "Predicted Power Level:  " << result[0] << std::endl;
     std::cout << std::endl << "CONGRATS GENIUS KHIEM! YOU PREDICTED THEIR POWER LEVEL CORRECTLY!" << std::endl;
     return 0;
 }

@@ -1,61 +1,93 @@
 #include <iostream>
 #include <vector>
 #include <string>
-#include <fstream>  // Required for reading files
-#include <sstream>  // Required for splitting strings
+#include <fstream>
+#include <sstream>
+#include "logistic_regression.hpp" 
 
-// Function to load data from a CSV file.
-// It takes the filename, and two empty vectors (X for features, y for labels) passed by reference (&) so it can fill them.
-bool load_csv_data(const std::string& filename, std::vector<std::vector<double>>& X, std::vector<double>& y) {
-    
-    // Open the file
+/**
+ * load_data: A helper function to read comma-separated values from a file.
+ * X: A 2D vector that will store all feature data (all columns except the last).
+ * y: A 1D vector that will store the target labels (the last column).
+ */
+bool load_data(const std::string& filename, std::vector<std::vector<double>>& X, std::vector<double>& y) {
+    // Attempt to open the file
     std::ifstream file(filename);
     if (!file.is_open()) {
-        std::cerr << "Error: Could not open file '" << filename << "'. Check if the path is correct!" << std::endl;
+        std::cerr << "Alert: Could not open the file at " << filename << ". Check your path." << std::endl;
         return false;
     }
 
     std::string line;
-    
-    // Read the file line by line until we reach the end
+    // Read the file one line at a time
     while (std::getline(file, line)) {
-        
-        // Skip completely empty lines
-        if (line.empty()) {
-            continue; 
-        }
+        // Skip empty lines to prevent errors during processing
+        if (line.empty()) continue;
 
-        //Set up a string stream to break down the current line
         std::stringstream ss(line);
-        std::string value_str;
-        std::vector<double> row_features;
+        std::string val;
+        std::vector<double> row;
 
-        //Extract every comma-separated value in the row
-        while (std::getline(ss, value_str, ',')) {
-            try {
-                // Convert the text string into a double (decimal number) and add it to our row
-                row_features.push_back(std::stod(value_str));
-            } catch (const std::invalid_argument& e) {
-                // If it hits a column header (like the word "cement" in concrete.csv), it skips the row
-                break; 
-            }
+        // Split the line by commas
+        while (std::getline(ss, val, ',')) {
+            try { 
+                // Convert string to double. If it's a header word, the catch block skips it.
+                row.push_back(std::stod(val)); 
+            } catch (...) { break; } 
         }
 
-        // Separate the features from the label
-        // If the row successfully populated with numbers
-        if (!row_features.empty()) {
-            // The last item in the row is our target classification label (y)
-            y.push_back(row_features.back());
-            
-            // Remove the label from our feature list so X only contains data attributes
-            row_features.pop_back();
-            
-            // Add the cleaned feature row to our main dataset X
-            X.push_back(row_features);
+        // If we found data, store the last value as our label (y) and the rest as features (X)
+        if (!row.empty()) {
+            y.push_back(row.back()); // Store target label
+            row.pop_back();          // Remove label from row
+            X.push_back(row);        // Store remaining features
         }
     }
-
-    // Close the file to free up system memory
     file.close();
     return true;
+}
+
+int main() {
+    // Storage for training data
+    std::vector<std::vector<double>> X;
+    std::vector<double> y;
+
+    //Load data
+    // Specify the file to load. Change this to "concrete.csv" or "mnist.csv" as needed.
+    std::string data_file = "ecg.csv";
+    std::cout << "Loading data from " << data_file << "..." << std::endl;
+
+    if (!load_data(data_file, X, y)) {
+        return 1; // Exit if loading failed
+    }
+    std::cout << "Successfully loaded " << X.size() << " samples." << std::endl;
+
+    // TRAIN MODEL
+    // Hyperparameters: Learning Rate (0.01), Iterations (1000), Regularization (0.01)
+    sklearn_cpp::linear_model::LogisticRegression model(0.01, 1000, 0.01);
+    
+    
+    model.fit(X, y); // The model detects mode (binary/multi) automatically
+    
+
+    // Evaluate Performace
+    std::cout << "\n--- Checking Predictions on First 5 Samples ---" << std::endl;
+    int correct_guesses = 0;
+
+    for (int i = 0; i < 5 && i < (int)X.size(); ++i) {
+        int prediction = model.predict(X[i]);
+        bool is_correct = (prediction == static_cast<int>(y[i]));
+        
+        if (is_correct) correct_guesses++;
+
+        std::cout << "Sample " << i << " | Actual: " << y[i] 
+                  << " | Model Guess: " << prediction 
+                  << (is_correct ? " [PASS]" : " [FAIL]") 
+                  << std::endl;
+    }
+
+    std::cout << "\nBatch accuracy for these 5 samples: " << (correct_guesses / 5.0) * 100 << "%" << std::endl;
+    std::cout << "-----------------------------------------------" << std::endl;
+
+    return 0; // Everything ran successfully
 }
