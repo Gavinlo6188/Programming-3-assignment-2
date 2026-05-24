@@ -1,3 +1,4 @@
+//To run the code use "g++ -Iinclude main_multiclass.cpp"
 #include <iostream>
 #include <fstream>
 #include <string>
