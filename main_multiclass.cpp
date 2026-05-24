@@ -43,7 +43,7 @@ int main(){
     std::cout << "Answer for the first image: " << answers[0] << std::endl; //print answer for the first image
 
     std::cout << "Training Logistic Regression model..." << std::endl; //traning start
-    sklearn_cpp::LogisticRegression model(0.01); //load .hpp
+    sklearn_cpp::linear_model::LogisticRegression model(0.01); //load .hpp
     model.fit(pixels, answers); //train the model with the loaded data
     std::cout << "Model training completed." << std::endl; //training completed
 
