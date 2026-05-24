@@ -3,7 +3,7 @@
 #include <string>
 #include <sstream>
 #include <vector>
-#include "multiclass_logistic_regression.hpp"
+#include "sklearn_cpp/linear_model/LogisticRegression.hpp"
 
 void load_read_mnist(const std::string& filepath, std::vector<std::vector<double>>& pixels, std::vector<double>& answers){ //load MNIST from Data/mnist.csv
     std::ifstream file(filepath);
